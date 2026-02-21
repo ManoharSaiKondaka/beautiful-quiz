@@ -7,38 +7,39 @@
 <style>
 body {
   margin: 0;
-  background: #0f0f14;
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  color: white;
-  overflow-x: hidden;
+  background: #f7f4f9;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+  color: #2d2d2d;
 }
 
 .app {
-  max-width: 500px;
+  max-width: 480px;
   margin: auto;
-  padding: 30px 20px 60px;
+  padding: 30px 18px 60px;
 }
 
 .title {
   text-align: center;
   font-size: 22px;
   font-weight: 600;
-  margin-bottom: 25px;
+  margin-bottom: 30px;
+  color: #4b3f72;
 }
 
 .option {
-  border-radius: 24px;
+  border-radius: 26px;
   overflow: hidden;
   margin-bottom: 24px;
-  transition: all 0.6s cubic-bezier(.22,1,.36,1);
-  transform-origin: center;
+  background: white;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+  transition: transform 0.5s cubic-bezier(.22,1,.36,1),
+              opacity 0.4s ease;
 }
 
 .option img {
   width: 100%;
   height: 300px;
   object-fit: cover;
-  border-radius: 24px;
   display: block;
 }
 
@@ -48,10 +49,10 @@ body {
 
 .divider {
   height: 1px;
-  background: rgba(255,255,255,0.1);
+  background: #e8e3ef;
   margin: 30px 0;
   opacity: 0;
-  transition: 0.4s;
+  transition: opacity 0.4s ease;
 }
 
 .divider.show {
@@ -61,4 +62,137 @@ body {
 .message {
   text-align: center;
   font-size: 16px;
-  min-height: 24px;
+  margin-top: 10px;
+  min-height: 22px;
+  color: #6b5b95;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: all 0.4s ease;
+}
+
+.message.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Celebration glow */
+.success-bg {
+  animation: bgShift 1.5s ease forwards;
+}
+
+@keyframes bgShift {
+  0% { background: #f7f4f9; }
+  50% { background: #fff3f8; }
+  100% { background: #f7f4f9; }
+}
+
+/* Sparkle particles */
+.sparkle {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  background: radial-gradient(circle, #ff9ecb, #ffd3e8);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: sparkleMove 1.4s ease-out forwards;
+}
+
+@keyframes sparkleMove {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-140px) scale(0.5);
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+  <div class="title">Which Photo Is The Most Beautiful? 💕</div>
+
+  <div id="options">
+    <div class="option" onclick="selectOption(this)">
+      <img src="photo1.png">
+    </div>
+
+    <div class="option" onclick="selectOption(this)">
+      <img src="photo2.png">
+    </div>
+
+    <div class="option" onclick="selectOption(this)">
+      <img src="photo3.png">
+    </div>
+  </div>
+
+  <div class="divider" id="divider"></div>
+  <div id="selectedSection"></div>
+
+  <div class="message" id="message"></div>
+</div>
+
+<script>
+let selectedCount = 0;
+
+function selectOption(option) {
+  if (option.classList.contains("selected")) return;
+
+  option.classList.add("selected");
+  selectedCount++;
+
+  document.getElementById("selectedSection").appendChild(option);
+  document.getElementById("divider").classList.add("show");
+
+  if (selectedCount === 1) {
+    showMessage("❌ Wrong 😜 Try another one.");
+  }
+  else if (selectedCount === 2) {
+    showMessage("❌ Still wrong… keep going 💕");
+  }
+  else if (selectedCount === 3) {
+    celebrate();
+  }
+}
+
+function showMessage(text) {
+  const msg = document.getElementById("message");
+  msg.innerText = text;
+  msg.classList.add("show");
+
+  setTimeout(() => {
+    msg.classList.remove("show");
+  }, 1800);
+}
+
+function celebrate() {
+  showMessage("✅ Correct! Every photo you chose is beautiful ❤️✨");
+  document.body.classList.add("success-bg");
+
+  for (let i = 0; i < 140; i++) {
+    createSparkle();
+  }
+
+  setTimeout(() => {
+    document.body.classList.remove("success-bg");
+  }, 1500);
+}
+
+function createSparkle() {
+  const sparkle = document.createElement("div");
+  sparkle.classList.add("sparkle");
+
+  sparkle.style.left = Math.random() * 100 + "vw";
+  sparkle.style.top = (Math.random() * 60 + 40) + "vh";
+
+  document.body.appendChild(sparkle);
+
+  setTimeout(() => sparkle.remove(), 1400);
+}
+</script>
+
+</body>
+</html>
