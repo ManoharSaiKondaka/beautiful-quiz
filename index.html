@@ -20,8 +20,8 @@ body {
   justify-content: center;
   transition: background 0.5s ease;
   position: relative;
-  overflow: hidden; /* Prevent body scroll */
-  padding: 10px 0; /* Add small padding top and bottom */
+  overflow: hidden;
+  padding: 8px 0;
 }
 
 body.celebration {
@@ -30,32 +30,32 @@ body.celebration {
 
 .app {
   width: 100%;
-  height: calc(100vh - 20px); /* Subtract body padding */
-  max-width: 480px;
+  height: calc(100vh - 16px);
+  max-width: 420px;
   margin: 0 auto;
-  padding: 15px 20px 25px; /* Increased bottom padding */
+  padding: 12px 16px 16px;
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
   box-shadow: 0 30px 60px rgba(0,0,0,0.3);
   display: flex;
   flex-direction: column;
-  overflow: hidden; /* Prevent internal scroll */
-  border-radius: 40px;
+  overflow: hidden;
+  border-radius: 36px;
 }
 
 .title {
   text-align: center;
-  font-size: min(28px, 6vw);
+  font-size: min(24px, 5vw);
   font-weight: 700;
-  margin-bottom: 15px;
+  margin-bottom: 12px;
   background: linear-gradient(135deg, #667eea, #764ba2);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  letter-spacing: -0.5px;
+  letter-spacing: -0.3px;
   animation: titlePulse 2s infinite;
   flex-shrink: 0;
-  padding: 0 5px;
+  padding: 0 4px;
 }
 
 @keyframes titlePulse {
@@ -66,18 +66,10 @@ body.celebration {
 .options-container {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
   flex: 1;
-  min-height: 0; /* Important for flex child */
-  overflow-y: auto; /* Allow scrolling only if needed */
-  padding: 5px 0;
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Hide scrollbar but keep functionality */
-.options-container::-webkit-scrollbar {
-  width: 0;
-  background: transparent;
+  justify-content: center; /* Center vertically */
+  padding: 4px 0;
 }
 
 .option {
@@ -90,9 +82,9 @@ body.celebration {
   position: relative;
   animation: floatIn 0.6s ease-out;
   animation-fill-mode: both;
-  flex-shrink: 0;
-  aspect-ratio: 16/9; /* Maintain proper image ratio */
-  width: 100%; /* Full width */
+  aspect-ratio: 1/1; /* Perfect square */
+  width: 100%;
+  max-height: none; /* Remove height restrictions */
 }
 
 .option:nth-child(1) { animation-delay: 0.1s; }
@@ -102,7 +94,7 @@ body.celebration {
 @keyframes floatIn {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(15px);
   }
   to {
     opacity: 1;
@@ -154,17 +146,17 @@ body.celebration {
 .option.selected::after {
   content: '✓';
   position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 30px;
-  height: 30px;
+  top: 12px;
+  right: 12px;
+  width: 28px;
+  height: 28px;
   background: #4CAF50;
   color: white;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold;
   box-shadow: 0 3px 10px rgba(76, 175, 80, 0.4);
   z-index: 2;
@@ -179,8 +171,8 @@ body.celebration {
 .option img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* This ensures images cover area without distortion */
-  object-position: center; /* Center the image */
+  object-fit: cover;
+  object-position: center;
   display: block;
   transition: transform 0.5s ease;
 }
@@ -192,7 +184,7 @@ body.celebration {
 .divider {
   height: 2px;
   background: linear-gradient(90deg, transparent, #667eea, #764ba2, #667eea, transparent);
-  margin: 12px 0 12px;
+  margin: 10px 0 10px;
   border-radius: 3px;
   opacity: 0;
   transform: scaleX(0);
@@ -206,16 +198,16 @@ body.celebration {
 }
 
 .selected-section {
-  min-height: 70px;
+  min-height: 60px;
   display: flex;
-  gap: 10px;
+  gap: 8px;
   flex-wrap: wrap;
   justify-content: center;
   opacity: 0;
-  transform: translateY(10px);
+  transform: translateY(8px);
   transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   flex-shrink: 0;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .selected-section.show {
@@ -224,33 +216,33 @@ body.celebration {
 }
 
 .selected-thumbnail {
-  width: 70px;
-  height: 70px;
+  width: 60px;
+  height: 60px;
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
   animation: slideIn 0.3s ease;
   border: 2px solid white;
   transition: all 0.3s ease;
-  aspect-ratio: 1/1; /* Square thumbnails */
+  aspect-ratio: 1/1;
 }
 
 .selected-thumbnail:hover {
   transform: scale(1.1) rotate(5deg);
-  box-shadow: 0 12px 25px rgba(0,0,0,0.3);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.25);
 }
 
 .selected-thumbnail img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Maintain aspect ratio in thumbnails */
+  object-fit: cover;
   object-position: center;
 }
 
 @keyframes slideIn {
   from {
     opacity: 0;
-    transform: translateX(-15px) scale(0.8);
+    transform: translateX(-12px) scale(0.8);
   }
   to {
     opacity: 1;
@@ -260,25 +252,25 @@ body.celebration {
 
 .message {
   text-align: center;
-  font-size: clamp(14px, 4vw, 18px);
-  margin: 8px 0 5px;
-  min-height: 45px;
-  padding: 10px 15px;
-  border-radius: 40px;
+  font-size: clamp(13px, 3.5vw, 16px);
+  margin: 6px 0 4px;
+  min-height: 40px;
+  padding: 8px 12px;
+  border-radius: 30px;
   background: linear-gradient(135deg, #667eea20, #764ba220);
   backdrop-filter: blur(10px);
   color: #4a3f6e;
   font-weight: 500;
   opacity: 0;
-  transform: translateY(8px) scale(0.95);
+  transform: translateY(6px) scale(0.95);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
   border: 1px solid rgba(255,255,255,0.5);
   flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  line-height: 1.3;
+  line-height: 1.2;
 }
 
 .message.show {
@@ -294,8 +286,8 @@ body.celebration {
 
 @keyframes errorShake {
   0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-5px); }
-  75% { transform: translateX(5px); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
 }
 
 .message.warning {
@@ -314,17 +306,16 @@ body.celebration {
   50% { transform: scale(1.02); }
 }
 
-/* Progress indicator */
 .progress {
   text-align: center;
-  font-size: 12px;
+  font-size: 11px;
   color: #888;
   opacity: 0;
   transition: opacity 0.3s ease;
   flex-shrink: 0;
   margin-top: auto;
-  padding-top: 5px;
-  padding-bottom: 5px; /* Extra bottom padding */
+  padding-top: 4px;
+  padding-bottom: 2px;
 }
 
 .progress.show {
@@ -333,10 +324,10 @@ body.celebration {
 
 .progress-bar {
   width: 100%;
-  height: 4px;
+  height: 3px;
   background: #e0e0e0;
-  border-radius: 4px;
-  margin-top: 4px;
+  border-radius: 3px;
+  margin-top: 3px;
   overflow: hidden;
 }
 
@@ -345,7 +336,7 @@ body.celebration {
   background: linear-gradient(90deg, #667eea, #764ba2);
   width: 0%;
   transition: width 0.3s ease;
-  border-radius: 4px;
+  border-radius: 3px;
   position: relative;
   overflow: hidden;
 }
@@ -369,10 +360,9 @@ body.celebration {
 /* Confetti/Cracker Animation */
 .confetti {
   position: fixed;
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
   background: #ffd93d;
-  position: fixed;
   top: -10px;
   z-index: 1000;
   animation: confettiFall 3s ease-out forwards;
@@ -392,10 +382,10 @@ body.celebration {
 
 .cracker {
   position: fixed;
-  font-size: 30px;
+  font-size: 24px;
   z-index: 1000;
   animation: crackerPop 1s ease-out forwards;
-  filter: drop-shadow(0 0 8px gold);
+  filter: drop-shadow(0 0 6px gold);
   pointer-events: none;
 }
 
@@ -406,7 +396,7 @@ body.celebration {
   }
   50% {
     opacity: 1;
-    transform: scale(1.3) rotate(180deg);
+    transform: scale(1.2) rotate(180deg);
   }
   100% {
     opacity: 0;
@@ -416,10 +406,10 @@ body.celebration {
 
 .heart {
   position: fixed;
-  font-size: 18px;
+  font-size: 16px;
   z-index: 1000;
   animation: heartFloat 2s ease-out forwards;
-  filter: drop-shadow(0 0 5px hotpink);
+  filter: drop-shadow(0 0 4px hotpink);
   pointer-events: none;
 }
 
@@ -430,59 +420,14 @@ body.celebration {
   }
   100% {
     opacity: 0;
-    transform: translateY(-80px) scale(0);
+    transform: translateY(-60px) scale(0);
   }
 }
 
-/* Landscape mode adjustment */
-@media (orientation: landscape) and (max-height: 500px) {
-  .option {
-    aspect-ratio: 16/9;
-  }
-  
-  .selected-thumbnail {
-    width: 50px;
-    height: 50px;
-  }
-  
-  .title {
-    margin-bottom: 8px;
-    font-size: 22px;
-  }
-  
-  .options-container {
-    gap: 8px;
-  }
-  
-  .app {
-    padding: 10px 20px 20px;
-  }
-}
-
-/* Very small screens */
-@media (max-height: 600px) {
-  .title {
-    margin-bottom: 10px;
-  }
-  
-  .message {
-    padding: 8px 12px;
-    min-height: 40px;
-  }
-  
-  .app {
-    padding: 10px 20px 20px;
-  }
-}
-
-/* Add safe area for notches and home indicators */
+/* Safe area for notches */
 @supports (padding: max(0px)) {
   .app {
-    padding-bottom: max(25px, env(safe-area-inset-bottom));
-  }
-  
-  body {
-    padding-bottom: max(10px, env(safe-area-inset-bottom));
+    padding-bottom: max(16px, env(safe-area-inset-bottom));
   }
 }
 </style>
@@ -590,7 +535,7 @@ function showMessage(text, type = '') {
   
   setTimeout(() => {
     msg.classList.remove("show");
-  }, 2000);
+  }, 1800);
 }
 
 function celebrate() {
@@ -603,18 +548,18 @@ function celebrate() {
   document.body.classList.add("celebration");
   
   // Create confetti explosion!
-  for (let i = 0; i < 60; i++) {
-    setTimeout(() => createConfetti(), i * 30);
+  for (let i = 0; i < 50; i++) {
+    setTimeout(() => createConfetti(), i * 25);
   }
   
   // Create crackers!
-  for (let i = 0; i < 15; i++) {
-    setTimeout(() => createCracker(), i * 150);
+  for (let i = 0; i < 12; i++) {
+    setTimeout(() => createCracker(), i * 120);
   }
   
   // Create floating hearts!
-  for (let i = 0; i < 20; i++) {
-    setTimeout(() => createHeart(), i * 80);
+  for (let i = 0; i < 15; i++) {
+    setTimeout(() => createHeart(), i * 70);
   }
   
   // Add bounce animation to selected thumbnails
@@ -625,13 +570,13 @@ function celebrate() {
       setTimeout(() => {
         thumb.style.animation = '';
       }, 500);
-    }, index * 200);
+    }, index * 150);
   });
   
   // Remove celebration class after animation
   setTimeout(() => {
     document.body.classList.remove("celebration");
-  }, 4000);
+  }, 3500);
 }
 
 function createConfetti() {
@@ -644,8 +589,8 @@ function createConfetti() {
   
   // Random position and size
   confetti.style.left = Math.random() * 100 + "%";
-  confetti.style.width = Math.random() * 12 + 4 + "px";
-  confetti.style.height = Math.random() * 12 + 4 + "px";
+  confetti.style.width = Math.random() * 10 + 3 + "px";
+  confetti.style.height = Math.random() * 10 + 3 + "px";
   confetti.style.animationDuration = Math.random() * 2 + 2 + "s";
   
   document.body.appendChild(confetti);
@@ -666,10 +611,6 @@ function createCracker() {
   // Random position
   cracker.style.left = Math.random() * 100 + "%";
   cracker.style.top = Math.random() * 100 + "%";
-  
-  // Random size
-  const size = Math.random() * 25 + 20;
-  cracker.style.fontSize = size + "px";
   
   document.body.appendChild(cracker);
   
@@ -694,7 +635,7 @@ function createHeart() {
   
   setTimeout(() => {
     heart.remove();
-  }, 1800);
+  }, 1600);
 }
 
 // Reset function (double-click to reset)
