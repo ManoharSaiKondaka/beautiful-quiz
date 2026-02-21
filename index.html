@@ -34,8 +34,6 @@ body.celebration {
   backdrop-filter: blur(10px);
   border-radius: 40px;
   box-shadow: 0 30px 60px rgba(0,0,0,0.3);
-  transform: translateY(0);
-  transition: transform 0.3s ease;
 }
 
 .title {
@@ -66,8 +64,6 @@ body.celebration {
   cursor: pointer;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
-  opacity: 1;
-  transform: scale(1) translateY(0);
 }
 
 .option::before {
@@ -227,31 +223,14 @@ body.celebration {
   box-shadow: 0 10px 25px rgba(76, 175, 80, 0.4);
 }
 
-/* Improved Sparkle Animation */
+/* Sparkle Animation */
 .sparkle {
   position: fixed;
   pointer-events: none;
   z-index: 1000;
+  font-size: 24px;
   animation: sparkleFloat 2s ease-out forwards;
-}
-
-.sparkle::before,
-.sparkle::after {
-  content: '✨';
-  position: absolute;
-  font-size: 20px;
   filter: drop-shadow(0 0 5px gold);
-}
-
-.sparkle::before {
-  animation: sparkleRotate 1s linear infinite;
-}
-
-.sparkle::after {
-  content: '🌟';
-  animation: sparkleRotate 1s linear infinite reverse;
-  font-size: 15px;
-  transform: translate(10px, -10px);
 }
 
 @keyframes sparkleFloat {
@@ -263,11 +242,6 @@ body.celebration {
     opacity: 0;
     transform: translateY(-100px) rotate(180deg) scale(0);
   }
-}
-
-@keyframes sparkleRotate {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
 }
 
 /* Progress indicator */
@@ -329,15 +303,15 @@ body.celebration {
   
   <div class="options-container" id="optionsContainer">
     <div class="option" onclick="selectOption(this)" data-index="0">
-      <img src="https://picsum.photos/400/300?random=1" alt="Beautiful photo 1">
+      <img src="photo1.png" alt="Beautiful photo 1">
     </div>
     
     <div class="option" onclick="selectOption(this)" data-index="1">
-      <img src="https://picsum.photos/400/300?random=2" alt="Beautiful photo 2">
+      <img src="photo2.png" alt="Beautiful photo 2">
     </div>
     
     <div class="option" onclick="selectOption(this)" data-index="2">
-      <img src="https://picsum.photos/400/300?random=3" alt="Beautiful photo 3">
+      <img src="photo3.png" alt="Beautiful photo 3">
     </div>
   </div>
   
@@ -463,28 +437,25 @@ function celebrate() {
 function createSparkle() {
   const sparkle = document.createElement("div");
   sparkle.className = "sparkle";
+  sparkle.innerHTML = '✨';
   
   // Random position
   sparkle.style.left = Math.random() * 100 + "%";
   sparkle.style.top = Math.random() * 100 + "%";
   
   // Random size
-  const size = Math.random() * 30 + 20;
+  const size = Math.random() * 20 + 20;
   sparkle.style.fontSize = size + "px";
-  
-  // Random animation duration
-  const duration = Math.random() * 1 + 1.5;
-  sparkle.style.animation = `sparkleFloat ${duration}s ease-out forwards`;
   
   document.body.appendChild(sparkle);
   
   // Remove sparkle after animation
   setTimeout(() => {
     sparkle.remove();
-  }, duration * 1000);
+  }, 2000);
 }
 
-// Reset function (optional - can be triggered to play again)
+// Reset function (double-click to reset)
 function resetGame() {
   selectedCount = 0;
   document.querySelectorAll('.option').forEach(opt => {
@@ -499,7 +470,7 @@ function resetGame() {
   document.getElementById('message').classList.remove('show', 'success');
 }
 
-// Optional: Add reset button or double-click to reset
+// Double-click to reset
 document.addEventListener('dblclick', resetGame);
 </script>
 
