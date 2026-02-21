@@ -30,8 +30,8 @@ body.celebration {
 
 .app {
   width: 100%;
+  max-width: 380px;
   height: calc(100vh - 16px);
-  max-width: 420px;
   margin: 0 auto;
   padding: 12px 16px 16px;
   background: rgba(255, 255, 255, 0.95);
@@ -40,14 +40,14 @@ body.celebration {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  border-radius: 36px;
+  border-radius: 32px;
 }
 
 .title {
   text-align: center;
-  font-size: min(24px, 5vw);
+  font-size: 22px;
   font-weight: 700;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
   background: linear-gradient(135deg, #667eea, #764ba2);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -55,7 +55,7 @@ body.celebration {
   letter-spacing: -0.3px;
   animation: titlePulse 2s infinite;
   flex-shrink: 0;
-  padding: 0 4px;
+  line-height: 1.2;
 }
 
 @keyframes titlePulse {
@@ -66,25 +66,26 @@ body.celebration {
 .options-container {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
   flex: 1;
-  justify-content: center; /* Center vertically */
-  padding: 4px 0;
+  justify-content: space-evenly;
+  padding: 2px 0;
+  overflow: visible;
 }
 
 .option {
-  border-radius: 24px;
+  border-radius: 20px;
   overflow: hidden;
   background: white;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.1);
   cursor: pointer;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   animation: floatIn 0.6s ease-out;
   animation-fill-mode: both;
-  aspect-ratio: 1/1; /* Perfect square */
+  aspect-ratio: 1/1;
   width: 100%;
-  max-height: none; /* Remove height restrictions */
+  max-height: none;
 }
 
 .option:nth-child(1) { animation-delay: 0.1s; }
@@ -117,26 +118,25 @@ body.celebration {
 }
 
 .option:hover {
-  transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.15);
 }
 
 .option:active {
-  transform: scale(0.98);
+  transform: scale(0.97);
 }
 
 .option.selected {
   opacity: 0.6;
-  transform: scale(0.95);
   filter: grayscale(0.5);
   cursor: default;
   animation: selectedShake 0.4s ease;
 }
 
 @keyframes selectedShake {
-  0%, 100% { transform: scale(0.95); }
-  25% { transform: scale(0.95) rotate(-1deg); }
-  75% { transform: scale(0.95) rotate(1deg); }
+  0%, 100% { transform: scale(1); }
+  25% { transform: scale(1) rotate(-0.5deg); }
+  75% { transform: scale(1) rotate(0.5deg); }
 }
 
 .option.selected::before {
@@ -146,19 +146,19 @@ body.celebration {
 .option.selected::after {
   content: '✓';
   position: absolute;
-  top: 12px;
-  right: 12px;
-  width: 28px;
-  height: 28px;
+  top: 8px;
+  right: 8px;
+  width: 24px;
+  height: 24px;
   background: #4CAF50;
   color: white;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: bold;
-  box-shadow: 0 3px 10px rgba(76, 175, 80, 0.4);
+  box-shadow: 0 2px 8px rgba(76, 175, 80, 0.4);
   z-index: 2;
   animation: popIn 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
@@ -184,7 +184,7 @@ body.celebration {
 .divider {
   height: 2px;
   background: linear-gradient(90deg, transparent, #667eea, #764ba2, #667eea, transparent);
-  margin: 10px 0 10px;
+  margin: 6px 0 6px;
   border-radius: 3px;
   opacity: 0;
   transform: scaleX(0);
@@ -198,16 +198,16 @@ body.celebration {
 }
 
 .selected-section {
-  min-height: 60px;
+  min-height: 52px;
   display: flex;
-  gap: 8px;
+  gap: 6px;
   flex-wrap: wrap;
   justify-content: center;
   opacity: 0;
-  transform: translateY(8px);
+  transform: translateY(6px);
   transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   flex-shrink: 0;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
 
 .selected-section.show {
@@ -216,11 +216,11 @@ body.celebration {
 }
 
 .selected-thumbnail {
-  width: 60px;
-  height: 60px;
-  border-radius: 16px;
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
   overflow: hidden;
-  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
   animation: slideIn 0.3s ease;
   border: 2px solid white;
   transition: all 0.3s ease;
@@ -228,8 +228,8 @@ body.celebration {
 }
 
 .selected-thumbnail:hover {
-  transform: scale(1.1) rotate(5deg);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+  transform: scale(1.08) rotate(3deg);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
 }
 
 .selected-thumbnail img {
@@ -242,7 +242,7 @@ body.celebration {
 @keyframes slideIn {
   from {
     opacity: 0;
-    transform: translateX(-12px) scale(0.8);
+    transform: translateX(-10px) scale(0.8);
   }
   to {
     opacity: 1;
@@ -252,9 +252,9 @@ body.celebration {
 
 .message {
   text-align: center;
-  font-size: clamp(13px, 3.5vw, 16px);
-  margin: 6px 0 4px;
-  min-height: 40px;
+  font-size: 14px;
+  margin: 4px 0 2px;
+  min-height: 42px;
   padding: 8px 12px;
   border-radius: 30px;
   background: linear-gradient(135deg, #667eea20, #764ba220);
@@ -262,9 +262,9 @@ body.celebration {
   color: #4a3f6e;
   font-weight: 500;
   opacity: 0;
-  transform: translateY(6px) scale(0.95);
+  transform: translateY(4px) scale(0.95);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
   border: 1px solid rgba(255,255,255,0.5);
   flex-shrink: 0;
   display: flex;
@@ -278,6 +278,20 @@ body.celebration {
   transform: translateY(0) scale(1);
 }
 
+/* Keep success message visible - no auto hide */
+.message.success.show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  background: linear-gradient(135deg, #4CAF50, #45a049);
+  color: white;
+  animation: successPulse 1s ease infinite;
+}
+
+@keyframes successPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+
 .message.error {
   background: linear-gradient(135deg, #ff6b6b, #ff4757);
   color: white;
@@ -286,24 +300,13 @@ body.celebration {
 
 @keyframes errorShake {
   0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-4px); }
-  75% { transform: translateX(4px); }
+  25% { transform: translateX(-3px); }
+  75% { transform: translateX(3px); }
 }
 
 .message.warning {
   background: linear-gradient(135deg, #ffd93d, #ffb347);
   color: #2d2d2d;
-}
-
-.message.success {
-  background: linear-gradient(135deg, #4CAF50, #45a049);
-  color: white;
-  animation: successPulse 0.5s ease infinite;
-}
-
-@keyframes successPulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.02); }
 }
 
 .progress {
@@ -314,8 +317,8 @@ body.celebration {
   transition: opacity 0.3s ease;
   flex-shrink: 0;
   margin-top: auto;
-  padding-top: 4px;
-  padding-bottom: 2px;
+  padding-top: 2px;
+  padding-bottom: 0;
 }
 
 .progress.show {
@@ -327,7 +330,7 @@ body.celebration {
   height: 3px;
   background: #e0e0e0;
   border-radius: 3px;
-  margin-top: 3px;
+  margin-top: 2px;
   overflow: hidden;
 }
 
@@ -360,8 +363,8 @@ body.celebration {
 /* Confetti/Cracker Animation */
 .confetti {
   position: fixed;
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
   background: #ffd93d;
   top: -10px;
   z-index: 1000;
@@ -382,10 +385,10 @@ body.celebration {
 
 .cracker {
   position: fixed;
-  font-size: 24px;
+  font-size: 22px;
   z-index: 1000;
   animation: crackerPop 1s ease-out forwards;
-  filter: drop-shadow(0 0 6px gold);
+  filter: drop-shadow(0 0 5px gold);
   pointer-events: none;
 }
 
@@ -420,7 +423,7 @@ body.celebration {
   }
   100% {
     opacity: 0;
-    transform: translateY(-60px) scale(0);
+    transform: translateY(-50px) scale(0);
   }
 }
 
@@ -428,6 +431,61 @@ body.celebration {
 @supports (padding: max(0px)) {
   .app {
     padding-bottom: max(16px, env(safe-area-inset-bottom));
+  }
+}
+
+/* Small height screens */
+@media (max-height: 650px) {
+  .app {
+    max-width: 360px;
+    padding: 8px 12px 12px;
+  }
+  
+  .title {
+    font-size: 20px;
+    margin-bottom: 4px;
+  }
+  
+  .option {
+    border-radius: 16px;
+  }
+  
+  .selected-thumbnail {
+    width: 46px;
+    height: 46px;
+  }
+  
+  .message {
+    font-size: 13px;
+    padding: 6px 10px;
+    min-height: 36px;
+  }
+}
+
+/* Very small height screens */
+@media (max-height: 550px) {
+  .app {
+    max-width: 340px;
+  }
+  
+  .title {
+    font-size: 18px;
+    margin-bottom: 2px;
+  }
+  
+  .options-container {
+    gap: 5px;
+  }
+  
+  .selected-thumbnail {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .message {
+    font-size: 12px;
+    padding: 4px 8px;
+    min-height: 32px;
   }
 }
 </style>
@@ -468,9 +526,10 @@ body.celebration {
 <script>
 let selectedCount = 0;
 const totalOptions = 3;
+let celebrationActive = false;
 
 function selectOption(option) {
-  if (option.classList.contains("selected")) return;
+  if (option.classList.contains("selected") || celebrationActive) return;
   
   // Add selection animation
   option.style.transform = 'scale(0.95)';
@@ -533,13 +592,20 @@ function showMessage(text, type = '') {
     msg.classList.add(type);
   }
   
-  setTimeout(() => {
-    msg.classList.remove("show");
-  }, 1800);
+  // Only auto-hide error and warning messages, not success
+  if (type !== 'success') {
+    setTimeout(() => {
+      if (!celebrationActive) {
+        msg.classList.remove("show");
+      }
+    }, 1800);
+  }
 }
 
 function celebrate() {
-  // Show surprising success message
+  celebrationActive = true;
+  
+  // Show surprising success message (stays forever)
   const msg = document.getElementById("message");
   msg.innerText = "🎉 SURPRISE! Every photo is beautiful! You win! 🎉";
   msg.classList.add("show", "success");
@@ -549,17 +615,17 @@ function celebrate() {
   
   // Create confetti explosion!
   for (let i = 0; i < 50; i++) {
-    setTimeout(() => createConfetti(), i * 25);
+    setTimeout(() => createConfetti(), i * 20);
   }
   
   // Create crackers!
   for (let i = 0; i < 12; i++) {
-    setTimeout(() => createCracker(), i * 120);
+    setTimeout(() => createCracker(), i * 100);
   }
   
   // Create floating hearts!
   for (let i = 0; i < 15; i++) {
-    setTimeout(() => createHeart(), i * 70);
+    setTimeout(() => createHeart(), i * 60);
   }
   
   // Add bounce animation to selected thumbnails
@@ -573,10 +639,10 @@ function celebrate() {
     }, index * 150);
   });
   
-  // Remove celebration class after animation
+  // Remove celebration class after animation (but message stays)
   setTimeout(() => {
     document.body.classList.remove("celebration");
-  }, 3500);
+  }, 3000);
 }
 
 function createConfetti() {
@@ -587,10 +653,8 @@ function createConfetti() {
   const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#ffeaa7', '#dfe6e9', '#ffd93d', '#6c5ce7'];
   confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
   
-  // Random position and size
+  // Random position
   confetti.style.left = Math.random() * 100 + "%";
-  confetti.style.width = Math.random() * 10 + 3 + "px";
-  confetti.style.height = Math.random() * 10 + 3 + "px";
   confetti.style.animationDuration = Math.random() * 2 + 2 + "s";
   
   document.body.appendChild(confetti);
@@ -635,22 +699,28 @@ function createHeart() {
   
   setTimeout(() => {
     heart.remove();
-  }, 1600);
+  }, 1500);
 }
 
 // Reset function (double-click to reset)
 function resetGame() {
   selectedCount = 0;
+  celebrationActive = false;
+  
   document.querySelectorAll('.option').forEach(opt => {
     opt.classList.remove('selected');
   });
+  
   document.getElementById('selectedSection').innerHTML = '';
   document.getElementById('selectedSection').classList.remove('show');
   document.getElementById('divider').classList.remove('show');
   document.getElementById('progress').classList.remove('show');
   document.getElementById('progressFill').style.width = '0%';
   document.getElementById('progressText').textContent = '0/3 selected';
-  document.getElementById('message').classList.remove('show', 'error', 'warning', 'success');
+  
+  const msg = document.getElementById('message');
+  msg.classList.remove('show', 'error', 'warning', 'success');
+  msg.innerText = '';
 }
 
 // Double-click to reset
