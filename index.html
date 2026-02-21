@@ -19,7 +19,6 @@ body {
   align-items: center;
   justify-content: center;
   transition: background 0.5s ease;
-  position: relative;
   overflow: hidden;
 }
 
@@ -29,17 +28,15 @@ body.celebration {
 
 .app {
   width: 100%;
-  max-width: 360px;
-  height: 95vh;
-  max-height: 700px;
+  max-width: 380px;
+  height: 100vh;
   margin: 0 auto;
-  padding: 16px 16px 20px;
+  padding: 12px 16px;
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
   box-shadow: 0 30px 60px rgba(0,0,0,0.3);
   display: flex;
   flex-direction: column;
-  overflow: hidden;
   border-radius: 36px;
 }
 
@@ -47,87 +44,43 @@ body.celebration {
   text-align: center;
   font-size: 22px;
   font-weight: 700;
-  margin-bottom: 16px;
+  margin-bottom: 8px;
   background: linear-gradient(135deg, #667eea, #764ba2);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  letter-spacing: -0.3px;
-  animation: titlePulse 2s infinite;
   flex-shrink: 0;
-  line-height: 1.2;
-}
-
-@keyframes titlePulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.02); }
+  height: 8%;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .options-container {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  flex: 1;
-  min-height: 0;
-  overflow: hidden; /* NO SCROLLING */
-  padding: 2px 0;
+  gap: 10px;
+  height: 62%; /* 70% - margins */
+  justify-content: space-evenly;
+  margin: 5px 0;
 }
 
 .option {
-  border-radius: 24px;
+  border-radius: 20px;
   overflow: hidden;
   background: white;
   box-shadow: 0 8px 20px rgba(0,0,0,0.1);
   cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.3s ease;
   position: relative;
-  animation: floatIn 0.6s ease-out;
-  animation-fill-mode: both;
-  width: 100%;
-  height: 0;
-  padding-bottom: 33%; /* This makes height exactly 1/3 of container */
-  position: relative;
-}
-
-.option:nth-child(1) { animation-delay: 0.1s; }
-.option:nth-child(2) { animation-delay: 0.2s; }
-.option:nth-child(3) { animation-delay: 0.3s; }
-
-@keyframes floatIn {
-  from {
-    opacity: 0;
-    transform: translateY(15px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.option .image-wrapper {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #f0f0f0;
-}
-
-.option img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain; /* This ensures full image visible without cropping */
-  object-position: center;
-  display: block;
-  transition: transform 0.5s ease;
+  height: 30%; /* Equal height for 3 photos */
+  min-height: 0;
 }
 
 .option:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.15);
 }
 
 .option:active {
@@ -137,34 +90,26 @@ body.celebration {
 .option.selected {
   opacity: 0.7;
   filter: grayscale(0.3);
-  cursor: default;
-  animation: selectedShake 0.4s ease;
-}
-
-@keyframes selectedShake {
-  0%, 100% { transform: translateY(0); }
-  25% { transform: translateY(0) rotate(-0.5deg); }
-  75% { transform: translateY(0) rotate(0.5deg); }
 }
 
 .option.selected::after {
   content: '✓';
   position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 28px;
-  height: 28px;
+  top: 6px;
+  right: 6px;
+  width: 24px;
+  height: 24px;
   background: #4CAF50;
   color: white;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: bold;
   box-shadow: 0 2px 8px rgba(76, 175, 80, 0.4);
   z-index: 10;
-  animation: popIn 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  animation: popIn 0.3s ease;
 }
 
 @keyframes popIn {
@@ -172,14 +117,22 @@ body.celebration {
   100% { transform: scale(1); }
 }
 
+.option img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
 .divider {
   height: 2px;
   background: linear-gradient(90deg, transparent, #667eea, #764ba2, #667eea, transparent);
-  margin: 10px 0 12px;
+  margin: 5px 0 8px;
   border-radius: 3px;
   opacity: 0;
   transform: scaleX(0);
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.5s ease;
   flex-shrink: 0;
 }
 
@@ -196,9 +149,10 @@ body.celebration {
   justify-content: center;
   opacity: 0;
   transform: translateY(8px);
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.5s ease;
   flex-shrink: 0;
-  margin-bottom: 6px;
+  margin-bottom: 5px;
+  height: 8%;
 }
 
 .selected-section.show {
@@ -207,30 +161,19 @@ body.celebration {
 }
 
 .selected-thumbnail {
-  width: 60px;
-  height: 60px;
-  border-radius: 16px;
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
   animation: slideIn 0.3s ease;
   border: 2px solid white;
-  transition: all 0.3s ease;
-  background: #f0f0f0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.selected-thumbnail:hover {
-  transform: scale(1.1) rotate(3deg);
-  box-shadow: 0 8px 18px rgba(0,0,0,0.2);
 }
 
 .selected-thumbnail img {
   width: 100%;
   height: 100%;
-  object-fit: contain; /* Show full image in thumbnails too */
-  object-position: center;
+  object-fit: cover;
 }
 
 @keyframes slideIn {
@@ -247,24 +190,22 @@ body.celebration {
 .message {
   text-align: center;
   font-size: 15px;
-  margin: 4px 0 4px;
-  min-height: 48px;
-  padding: 10px 14px;
+  margin: 3px 0;
+  padding: 8px 12px;
   border-radius: 30px;
   background: linear-gradient(135deg, #667eea20, #764ba220);
-  backdrop-filter: blur(10px);
   color: #4a3f6e;
   font-weight: 500;
   opacity: 0;
   transform: translateY(4px) scale(0.95);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
   border: 1px solid rgba(255,255,255,0.5);
   flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  line-height: 1.3;
+  min-height: 45px;
+  height: 10%;
 }
 
 .message.show {
@@ -272,7 +213,6 @@ body.celebration {
   transform: translateY(0) scale(1);
 }
 
-/* Success message stays visible */
 .message.success.show {
   background: linear-gradient(135deg, #4CAF50, #45a049);
   color: white;
@@ -302,7 +242,11 @@ body.celebration {
   transition: opacity 0.3s ease;
   flex-shrink: 0;
   margin-top: auto;
-  padding-top: 4px;
+  height: 5%;
+  min-height: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 }
 
 .progress.show {
@@ -323,28 +267,9 @@ body.celebration {
   background: linear-gradient(90deg, #667eea, #764ba2);
   width: 0%;
   transition: width 0.3s ease;
-  border-radius: 4px;
-  position: relative;
-  overflow: hidden;
 }
 
-.progress-fill::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-  animation: shimmer 1.5s infinite;
-}
-
-@keyframes shimmer {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
-}
-
-/* Confetti/Cracker Animation */
+/* Confetti Animation */
 .confetti {
   position: fixed;
   width: 6px;
@@ -410,69 +335,6 @@ body.celebration {
     transform: translateY(-60px) scale(0);
   }
 }
-
-/* Safe area for notches */
-@supports (padding: max(0px)) {
-  .app {
-    padding-bottom: max(20px, env(safe-area-inset-bottom));
-  }
-}
-
-/* Small height screens */
-@media (max-height: 650px) {
-  .app {
-    max-width: 340px;
-    padding: 12px 14px 16px;
-  }
-  
-  .title {
-    font-size: 20px;
-    margin-bottom: 12px;
-  }
-  
-  .option {
-    border-radius: 20px;
-  }
-  
-  .selected-thumbnail {
-    width: 52px;
-    height: 52px;
-  }
-  
-  .message {
-    font-size: 14px;
-    padding: 8px 12px;
-    min-height: 42px;
-  }
-}
-
-/* Very small height screens */
-@media (max-height: 550px) {
-  .app {
-    max-width: 320px;
-    padding: 8px 12px 12px;
-  }
-  
-  .title {
-    font-size: 18px;
-    margin-bottom: 8px;
-  }
-  
-  .options-container {
-    gap: 8px;
-  }
-  
-  .selected-thumbnail {
-    width: 45px;
-    height: 45px;
-  }
-  
-  .message {
-    font-size: 13px;
-    padding: 6px 10px;
-    min-height: 36px;
-  }
-}
 </style>
 </head>
 <body>
@@ -482,21 +344,15 @@ body.celebration {
   
   <div class="options-container" id="optionsContainer">
     <div class="option" onclick="selectOption(this)" data-index="0">
-      <div class="image-wrapper">
-        <img src="photo1.png" alt="Beautiful photo 1">
-      </div>
+      <img src="photo1.png" alt="Beautiful photo 1">
     </div>
     
     <div class="option" onclick="selectOption(this)" data-index="1">
-      <div class="image-wrapper">
-        <img src="photo2.png" alt="Beautiful photo 2">
-      </div>
+      <img src="photo2.png" alt="Beautiful photo 2">
     </div>
     
     <div class="option" onclick="selectOption(this)" data-index="2">
-      <div class="image-wrapper">
-        <img src="photo3.png" alt="Beautiful photo 3">
-      </div>
+      <img src="photo3.png" alt="Beautiful photo 3">
     </div>
   </div>
   
@@ -525,21 +381,14 @@ function selectOption(option) {
   option.classList.add("selected");
   selectedCount++;
   
-  // Update progress
   updateProgress();
   
-  // Create thumbnail for selected section
   const thumbnail = createThumbnail(option);
   document.getElementById("selectedSection").appendChild(thumbnail);
   document.getElementById("selectedSection").classList.add("show");
-  
-  // Show divider
   document.getElementById("divider").classList.add("show");
-  
-  // Show progress
   document.getElementById("progress").classList.add("show");
   
-  // Handle misleading messages based on selection count
   if (selectedCount === 1) {
     showMessage("❌ Oops! That's not the most beautiful one... try again?", "error");
   }
@@ -570,19 +419,12 @@ function showMessage(text, type = '') {
   msg.innerText = text;
   msg.classList.add("show");
   
-  // Remove previous type classes
   msg.classList.remove('error', 'warning', 'success');
+  if (type) msg.classList.add(type);
   
-  if (type) {
-    msg.classList.add(type);
-  }
-  
-  // Only auto-hide error and warning messages, not success
   if (type !== 'success') {
     setTimeout(() => {
-      if (!celebrationActive) {
-        msg.classList.remove("show");
-      }
+      if (!celebrationActive) msg.classList.remove("show");
     }, 1800);
   }
 }
@@ -590,30 +432,22 @@ function showMessage(text, type = '') {
 function celebrate() {
   celebrationActive = true;
   
-  // Show surprising success message (stays forever)
   const msg = document.getElementById("message");
   msg.innerText = "🎉 SURPRISE! Every photo is beautiful! You win! 🎉";
   msg.classList.add("show", "success");
   
-  // Add celebration class to body
   document.body.classList.add("celebration");
   
-  // Create confetti explosion!
   for (let i = 0; i < 50; i++) {
     setTimeout(() => createConfetti(), i * 20);
   }
-  
-  // Create crackers!
   for (let i = 0; i < 12; i++) {
     setTimeout(() => createCracker(), i * 100);
   }
-  
-  // Create floating hearts!
   for (let i = 0; i < 15; i++) {
     setTimeout(() => createHeart(), i * 60);
   }
   
-  // Remove celebration class after animation
   setTimeout(() => {
     document.body.classList.remove("celebration");
   }, 3000);
@@ -622,82 +456,51 @@ function celebrate() {
 function createConfetti() {
   const confetti = document.createElement("div");
   confetti.className = "confetti";
-  
-  // Random colors
   const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#ffeaa7', '#dfe6e9', '#ffd93d', '#6c5ce7'];
   confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
-  
-  // Random position
   confetti.style.left = Math.random() * 100 + "%";
   confetti.style.animationDuration = Math.random() * 2 + 2 + "s";
-  
   document.body.appendChild(confetti);
-  
-  setTimeout(() => {
-    confetti.remove();
-  }, 3000);
+  setTimeout(() => confetti.remove(), 3000);
 }
 
 function createCracker() {
   const cracker = document.createElement("div");
   cracker.className = "cracker";
-  
-  // Random emoji
   const emojis = ['🎉', '🎊', '✨', '🌟', '💥', '🎇', '🎆', '🧨'];
   cracker.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
-  
-  // Random position
   cracker.style.left = Math.random() * 100 + "%";
   cracker.style.top = Math.random() * 100 + "%";
-  
   document.body.appendChild(cracker);
-  
-  setTimeout(() => {
-    cracker.remove();
-  }, 1000);
+  setTimeout(() => cracker.remove(), 1000);
 }
 
 function createHeart() {
   const heart = document.createElement("div");
   heart.className = "heart";
-  
-  // Random love emojis
   const loveEmojis = ['❤️', '🧡', '💛', '💚', '💙', '💜', '🩷', '💖', '💗', '💓'];
   heart.innerHTML = loveEmojis[Math.floor(Math.random() * loveEmojis.length)];
-  
-  // Random position
   heart.style.left = Math.random() * 100 + "%";
   heart.style.top = Math.random() * 80 + 20 + "%";
-  
   document.body.appendChild(heart);
-  
-  setTimeout(() => {
-    heart.remove();
-  }, 1500);
+  setTimeout(() => heart.remove(), 1500);
 }
 
-// Reset function (double-click to reset)
 function resetGame() {
   selectedCount = 0;
   celebrationActive = false;
-  
-  document.querySelectorAll('.option').forEach(opt => {
-    opt.classList.remove('selected');
-  });
-  
+  document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
   document.getElementById('selectedSection').innerHTML = '';
   document.getElementById('selectedSection').classList.remove('show');
   document.getElementById('divider').classList.remove('show');
   document.getElementById('progress').classList.remove('show');
   document.getElementById('progressFill').style.width = '0%';
   document.getElementById('progressText').textContent = '0/3 selected';
-  
   const msg = document.getElementById('message');
   msg.classList.remove('show', 'error', 'warning', 'success');
   msg.innerText = '';
 }
 
-// Double-click to reset
 document.addEventListener('dblclick', resetGame);
 </script>
 
