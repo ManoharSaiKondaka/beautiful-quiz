@@ -467,11 +467,11 @@ body.celebration {
 <body>
 
 <div class="app">
-  <div class="title">✨ Most Beautiful Photo? ✨</div>
+  <div class="title">✨ Click On Most Beautiful Photo ✨</div>
   
   <div class="options-container" id="optionsContainer">
     <div class="option" onclick="selectOption(this)" data-index="0">
-      <img src="photo1.jgp" alt="Photo 1">
+      <img src="photo1.jpg" alt="Photo 1">
     </div>
     
     <div class="option" onclick="selectOption(this)" data-index="1">
@@ -560,7 +560,7 @@ function celebrate() {
   celebrationActive = true;
   
   const msg = document.getElementById("message");
-  msg.innerText = "🎉 ALL ARE BEAUTIFUL! 🎉";
+  msg.innerText = "🎉 YES EVERY PHOTO YOU CLICKED IS BEAUTIFUL! 🎉";
   msg.classList.add("show", "success");
   
   document.body.classList.add("celebration");
