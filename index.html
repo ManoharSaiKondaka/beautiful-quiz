@@ -1,666 +1,514 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Which Photo Is The Most Beautiful?</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Which Photo Is The Most Beautiful?</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @keyframes popIn {
+      0% {
+        transform: scale(0);
+      }
 
-<style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+      80% {
+        transform: scale(1.2);
+      }
 
-body {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.5s ease;
-  overflow: hidden;
-}
+      100% {
+        transform: scale(1);
+      }
+    }
 
-body.celebration {
-  background: linear-gradient(135deg, #ff6b6b 0%, #ffd93d 100%);
-}
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(-12px) scale(0.8);
+      }
 
-.app {
-  width: 100%;
-  max-width: 360px;
-  height: 95vh;
-  max-height: 700px;
-  margin: 0 auto;
-  padding: 12px 16px;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 30px 60px rgba(0,0,0,0.3);
-  display: flex;
-  flex-direction: column;
-  border-radius: 32px;
-}
+      to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+      }
+    }
 
-.title {
-  text-align: center;
-  font-size: 18px;
-  font-weight: 600;
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  flex-shrink: 0;
-  height: 6%;
-  min-height: 35px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 4px;
-}
+    @keyframes confettiFall {
+      0% {
+        transform: translateY(-10vh) rotate(0deg);
+        opacity: 1;
+      }
 
-.options-container {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  height: 65%;
-  justify-content: center;
-  margin: 2px 0;
-}
+      100% {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+      }
+    }
 
-.option {
-  border-radius: 16px;
-  overflow: hidden;
-  background: white;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.1);
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  aspect-ratio: 1/1;
-  width: 75%;
-  margin: 0 auto;
-}
+    @keyframes crackerPop {
+      0% {
+        transform: scale(0) rotate(0deg);
+        opacity: 0;
+      }
 
-.option:hover {
-  transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 12px 24px rgba(0,0,0,0.15);
-}
+      50% {
+        transform: scale(1.5) rotate(180deg);
+        opacity: 1;
+      }
 
-.option:active {
-  transform: scale(0.97);
-}
+      100% {
+        transform: scale(0) rotate(360deg);
+        opacity: 0;
+      }
+    }
 
-.option.selected {
-  opacity: 0.7;
-  filter: grayscale(0.3);
-  animation: selectedShake 0.3s ease;
-}
+    @keyframes float {
 
-@keyframes selectedShake {
-  0%, 100% { transform: scale(1); }
-  25% { transform: scale(1) rotate(-0.5deg); }
-  75% { transform: scale(1) rotate(0.5deg); }
-}
+      0%,
+      100% {
+        transform: translateY(0);
+      }
 
-.option.selected::after {
-  content: '✓';
-  position: absolute;
-  top: 6px;
-  right: 6px;
-  width: 24px;
-  height: 24px;
-  background: #4CAF50;
-  color: white;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  font-weight: bold;
-  box-shadow: 0 2px 8px rgba(76, 175, 80, 0.4);
-  z-index: 10;
-  animation: popIn 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-}
+      50% {
+        transform: translateY(-10px);
+      }
+    }
 
-@keyframes popIn {
-  0% { transform: scale(0); }
-  80% { transform: scale(1.2); }
-  100% { transform: scale(1); }
-}
+    @keyframes pulse {
 
-.option img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center; /* Changed from center to top */
-  display: block;
-  transition: transform 0.4s ease;
-}
+      0%,
+      100% {
+        transform: scale(1);
+      }
 
-.option:hover img {
-  transform: scale(1.08);
-}
+      50% {
+        transform: scale(1.05);
+      }
+    }
 
-.divider {
-  height: 2px;
-  background: linear-gradient(90deg, transparent, #667eea, #764ba2, #667eea, transparent);
-  margin: 6px 0 8px;
-  border-radius: 3px;
-  opacity: 0;
-  transform: scaleX(0);
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  flex-shrink: 0;
-}
+    @keyframes glow {
 
-.divider.show {
-  opacity: 1;
-  transform: scaleX(1);
-}
+      0%,
+      100% {
+        box-shadow: 0 0 20px rgba(102, 126, 234, 0.5);
+      }
 
-.selected-section {
-  min-height: 60px;
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  justify-content: center;
-  opacity: 0;
-  transform: translateY(8px);
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  flex-shrink: 0;
-  margin: 4px 0;
-  height: 8%;
-}
+      50% {
+        box-shadow: 0 0 40px rgba(102, 126, 234, 0.8);
+      }
+    }
 
-.selected-section.show {
-  opacity: 1;
-  transform: translateY(0);
-}
+    .selected-check::after {
+      content: '✓';
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, #4CAF50, #45a049);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: bold;
+      box-shadow: 0 4px 15px rgba(76, 175, 80, 0.5);
+      z-index: 10;
+      animation: popIn 0.4s ease-out;
+      border: 2px solid white;
+    }
 
-.selected-thumbnail {
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  animation: slideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  border: 2px solid white;
-  aspect-ratio: 1/1;
-}
+    /* Disabled look for clicked photos */
+    .option-item.selected {
+      opacity: 0.7;
+      filter: grayscale(0.3);
+      cursor: default;
+      pointer-events: none;
+      border: 3px solid #4CAF50;
+    }
 
-.selected-thumbnail:hover {
-  transform: scale(1.1) rotate(3deg);
-  box-shadow: 0 8px 18px rgba(0,0,0,0.2);
-}
+    .thumbnail-slide {
+      animation: slideIn 0.4s ease-out;
+    }
 
-.selected-thumbnail img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: top; /* Also changed thumbnails to show top */
-}
+    /* Larger thumbnails on desktop */
+    @media (min-width: 768px) {
+      .thumbnail-slide {
+        width: 100px;
+        height: 100px;
+      }
+    }
 
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateX(-12px) scale(0.8);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0) scale(1);
-  }
-}
+    @media (min-width: 1024px) {
+      .thumbnail-slide {
+        width: 120px;
+        height: 120px;
+      }
+    }
 
-.message {
-  text-align: center;
-  font-size: 14px;
-  padding: 8px 12px;
-  border-radius: 30px;
-  background: linear-gradient(135deg, #667eea20, #764ba220);
-  backdrop-filter: blur(10px);
-  color: #4a3f6e;
-  font-weight: 500;
-  opacity: 0;
-  transform: translateY(4px) scale(0.95);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  border: 1px solid rgba(255,255,255,0.5);
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 42px;
-  height: 7%;
-  margin: 4px 0;
-}
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      top: -10px;
+      z-index: 1000;
+      animation: confettiFall 3s linear forwards;
+      pointer-events: none;
+    }
 
-.message.show {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-}
+    .cracker {
+      position: fixed;
+      font-size: 35px;
+      z-index: 1000;
+      animation: crackerPop 1.2s ease-out forwards;
+      filter: drop-shadow(0 0 15px gold);
+      pointer-events: none;
+    }
 
-.message.success.show {
-  background: linear-gradient(135deg, #4CAF50, #45a049);
-  color: white;
-  animation: successPulse 2s ease infinite;
-}
+    .message-stay {
+      transition: all 0.3s ease;
+    }
 
-@keyframes successPulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.02); }
-}
+    .start-screen {
+      transition: opacity 0.5s ease;
+    }
 
-.message.error {
-  background: linear-gradient(135deg, #ff6b6b, #ff4757);
-  color: white;
-  animation: errorShake 0.4s ease;
-}
+    .start-button {
+      animation: pulse 2s infinite, glow 2s infinite;
+    }
 
-@keyframes errorShake {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-4px); }
-  75% { transform: translateX(4px); }
-}
+    .floating {
+      animation: float 3s ease-in-out infinite;
+    }
 
-.message.warning {
-  background: linear-gradient(135deg, #ffd93d, #ffb347);
-  color: #2d2d2d;
-}
+    .delay-1 {
+      animation-delay: 0.5s;
+    }
 
-.progress {
-  text-align: center;
-  font-size: 11px;
-  color: #888;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  flex-shrink: 0;
-  margin-top: auto;
-  height: 5%;
-  min-height: 28px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-}
+    .delay-2 {
+      animation-delay: 1s;
+    }
 
-.progress.show {
-  opacity: 1;
-}
-
-.progress-bar {
-  width: 100%;
-  height: 4px;
-  background: #e0e0e0;
-  border-radius: 4px;
-  margin-top: 3px;
-  overflow: hidden;
-}
-
-.progress-fill {
-  height: 100%;
-  background: linear-gradient(90deg, #667eea, #764ba2);
-  width: 0%;
-  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  overflow: hidden;
-}
-
-.progress-fill::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-  animation: shimmer 1.5s infinite;
-}
-
-@keyframes shimmer {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
-}
-
-/* Rich Celebration Animations */
-.confetti {
-  position: fixed;
-  width: 8px;
-  height: 8px;
-  background: #ffd93d;
-  top: -10px;
-  z-index: 1000;
-  animation: confettiFall 3s ease-out forwards;
-  pointer-events: none;
-}
-
-@keyframes confettiFall {
-  0% {
-    transform: translateY(0) rotate(0deg);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(100vh) rotate(1080deg);
-    opacity: 0;
-  }
-}
-
-.cracker {
-  position: fixed;
-  font-size: 28px;
-  z-index: 1000;
-  animation: crackerPop 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  filter: drop-shadow(0 0 8px gold);
-  pointer-events: none;
-}
-
-@keyframes crackerPop {
-  0% {
-    opacity: 0;
-    transform: scale(0) rotate(0deg);
-  }
-  30% {
-    opacity: 1;
-    transform: scale(1.4) rotate(180deg);
-  }
-  70% {
-    opacity: 0.8;
-    transform: scale(1.2) rotate(270deg);
-  }
-  100% {
-    opacity: 0;
-    transform: scale(0) rotate(360deg);
-  }
-}
-
-.heart {
-  position: fixed;
-  font-size: 20px;
-  z-index: 1000;
-  animation: heartFloat 2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  filter: drop-shadow(0 0 6px hotpink);
-  pointer-events: none;
-}
-
-@keyframes heartFloat {
-  0% {
-    opacity: 1;
-    transform: translateY(0) scale(1) rotate(0deg);
-  }
-  50% {
-    transform: translateY(-40px) scale(1.2) rotate(10deg);
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(-80px) scale(0.8) rotate(20deg);
-  }
-}
-
-/* Star burst for extra celebration */
-.starburst {
-  position: fixed;
-  font-size: 30px;
-  z-index: 1000;
-  animation: starburstSpin 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  filter: drop-shadow(0 0 10px #ffd700);
-  pointer-events: none;
-}
-
-@keyframes starburstSpin {
-  0% {
-    opacity: 0;
-    transform: scale(0) rotate(0deg);
-  }
-  20% {
-    opacity: 1;
-    transform: scale(1.5) rotate(180deg);
-  }
-  80% {
-    opacity: 0.8;
-    transform: scale(1.3) rotate(540deg);
-  }
-  100% {
-    opacity: 0;
-    transform: scale(0) rotate(720deg);
-  }
-}
-
-/* Small height screens */
-@media (max-height: 650px) {
-  .app {
-    padding: 8px 14px;
-  }
-  
-  .title {
-    font-size: 16px;
-    min-height: 30px;
-  }
-  
-  .option {
-    width: 60%;
-  }
-  
-  .selected-thumbnail {
-    width: 42px;
-    height: 42px;
-  }
-  
-  .message {
-    font-size: 13px;
-    min-height: 38px;
-    padding: 6px 10px;
-  }
-}
-
-/* Very small height screens */
-@media (max-height: 550px) {
-  .option {
-    width: 55%;
-  }
-  
-  .selected-thumbnail {
-    width: 38px;
-    height: 38px;
-  }
-  
-  .message {
-    font-size: 12px;
-    min-height: 34px;
-  }
-}
-</style>
+    .quiz-content {
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+  </style>
 </head>
-<body>
 
-<div class="app">
-  <div class="title">✨ Click On Most Beautiful Photo ✨</div>
-  
-  <div class="options-container" id="optionsContainer">
-    <div class="option" onclick="selectOption(this)" data-index="0">
-      <img src="photo1.jpg" alt="Photo 1">
-    </div>
-    
-    
-    <div class="option" onclick="selectOption(this)" data-index="1">
-      <img src="photo2.jpg" alt="Photo 2">
-    </div>
-    
-    <div class="option" onclick="selectOption(this)" data-index="2">
-      <img src="photo3.jpg" alt="Photo 3">
+<body
+  class="bg-gradient-to-br from-[#667eea] to-[#764ba2] font-sans min-h-screen flex items-center justify-center transition-all duration-700 overflow-hidden p-3 md:p-4">
+
+  <!-- Start Screen -->
+  <div id="startScreen"
+    class="start-screen absolute inset-0 flex items-center justify-center z-20 bg-gradient-to-br from-[#667eea] to-[#764ba2]">
+    <div class="text-center p-8 md:p-12 max-w-2xl mx-auto">
+      <!-- Decorative floating hearts -->
+      <div class="flex justify-center gap-4 mb-8 floating">
+        <span class="text-5xl md:text-7xl delay-1 inline-block">❤️</span>
+        <span class="text-5xl md:text-7xl floating inline-block">✨</span>
+        <span class="text-5xl md:text-7xl delay-2 inline-block">💫</span>
+      </div>
+
+      <!-- Main title -->
+      <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 drop-shadow-lg">
+        Beauty Challenge
+      </h1>
+
+      <!-- Subtitle -->
+      <p class="text-xl md:text-2xl text-white/90 mb-12 max-w-lg mx-auto">
+        Which photo captures true beauty?
+      </p>
+
+      <!-- Start button with animation -->
+      <button onclick="startQuiz()" class="start-button bg-white text-2xl md:text-3xl px-12 py-5 rounded-full font-bold 
+               bg-gradient-to-r from-pink-500 to-purple-500 text-white shadow-2xl
+               hover:from-pink-600 hover:to-purple-600 transform hover:scale-105 
+               transition-all duration-300 border-4 border-white">
+        ✨ START QUIZ ✨
+      </button>
+
+      <!-- Decorative elements -->
+      <div class="flex justify-center gap-4 mt-16">
+        <span class="text-3xl opacity-50">📸</span>
+        <span class="text-3xl opacity-50">🌟</span>
+        <span class="text-3xl opacity-50">💖</span>
+      </div>
     </div>
   </div>
-  
-  <div class="divider" id="divider"></div>
-  
-  <div class="selected-section" id="selectedSection"></div>
-  
-  <div class="message" id="message"></div>
-  
-  <div class="progress" id="progress">
-    <span id="progressText">0/3 selected</span>
-    <div class="progress-bar">
-      <div class="progress-fill" id="progressFill"></div>
+
+  <!-- Quiz Content (hidden initially) -->
+  <div id="quizContent"
+    class="w-full max-w-[1400px] h-[95vh] max-h-[950px] bg-white/90 backdrop-blur-[10px] shadow-2xl flex flex-col rounded-3xl p-4 md:p-8 border border-white/30 relative overflow-hidden opacity-0 scale-95 quiz-content"
+    style="display: none;">
+
+    <!-- Decorative elements -->
+    <div class="absolute top-10 left-10 text-4xl opacity-10 rotate-12 select-none">✨</div>
+    <div class="absolute bottom-10 right-10 text-6xl opacity-10 -rotate-12 select-none">🌟</div>
+
+    <!-- Title -->
+    <div
+      class="text-center text-2xl md:text-4xl font-bold bg-gradient-to-r from-[#667eea] via-[#764ba2] to-[#ff6b6b] bg-clip-text text-transparent flex-shrink-0 h-auto py-3 md:py-5 relative z-10">
+      ✨ Which Photo Is The Most Beautiful? ✨
+    </div>
+
+    <!-- Options Container - No animations on images -->
+    <div
+      class="flex flex-col md:flex-row gap-4 md:gap-6 lg:gap-8 h-[60%] md:h-[65%] justify-center items-center my-3 md:my-4 relative z-10"
+      id="optionsContainer">
+      <!-- Option 1 -->
+      <div
+        class="option-item relative w-[85%] md:w-1/3 max-w-[350px] md:max-w-[400px] aspect-square rounded-2xl overflow-hidden bg-white shadow-2xl cursor-pointer transition-all duration-300 border-2 border-transparent"
+        onclick="selectOption(this)" data-index="0">
+        <img src="photo1.jpg" alt="Photo 1" class="w-full h-full object-cover object-center">
+      </div>
+
+      <!-- Option 2 -->
+      <div
+        class="option-item relative w-[85%] md:w-1/3 max-w-[350px] md:max-w-[400px] aspect-square rounded-2xl overflow-hidden bg-white shadow-2xl cursor-pointer transition-all duration-300 border-2 border-transparent"
+        onclick="selectOption(this)" data-index="1">
+        <img src="photo2.jpg" alt="Photo 2" class="w-full h-full object-cover object-center">
+      </div>
+
+      <!-- Option 3 -->
+      <div
+        class="option-item relative w-[85%] md:w-1/3 max-w-[350px] md:max-w-[400px] aspect-square rounded-2xl overflow-hidden bg-white shadow-2xl cursor-pointer transition-all duration-300 border-2 border-transparent"
+        onclick="selectOption(this)" data-index="2">
+        <img src="photo3.jpg" alt="Photo 3" class="w-full h-full object-cover object-center">
+      </div>
+    </div>
+
+    <!-- Divider -->
+    <div class="relative my-3 md:my-4" id="dividerContainer">
+      <div
+        class="h-[3px] bg-gradient-to-r from-transparent via-[#667eea] via-[#764ba2] to-transparent rounded-full transition-all duration-700 scale-x-0"
+        id="divider"></div>
+    </div>
+
+    <!-- Selected Section -->
+    <div
+      class="hidden min-h-[120px] md:min-h-[160px] lg:min-h-[180px] bg-white/30 backdrop-blur-sm rounded-2xl p-4 md:p-6 flex gap-4 md:gap-6 flex-wrap justify-center items-center opacity-0 translate-y-2 transition-all duration-500 my-2 h-auto border border-white/30 shadow-lg"
+      id="selectedSection">
+      <div class="text-gray-500 text-sm md:text-base italic flex items-center gap-2">
+        <span class="text-2xl md:text-3xl">🖼️</span>
+        Your selected photos will appear here
+        <span class="text-2xl md:text-3xl">✨</span>
+      </div>
+    </div>
+
+    <!-- Message Popup -->
+    <div class="relative my-3 md:my-4 flex justify-center" id="messageContainer">
+      <div
+        class="text-center text-base md:text-2xl p-4 md:p-5 px-6 md:px-10 rounded-2xl bg-gradient-to-r from-[#667eea] to-[#764ba2] text-white font-semibold transition-all duration-300 shadow-2xl flex items-center justify-center min-h-[70px] md:min-h-[90px] h-auto max-w-2xl mx-auto border-2 border-white/30 message-stay"
+        id="message">
+        <span class="mr-2">✨</span>
+        Click on any photo to begin your journey
+        <span class="ml-2">✨</span>
+      </div>
     </div>
   </div>
-</div>
 
-<script>
-let selectedCount = 0;
-const totalOptions = 3;
-let celebrationActive = false;
+  <script>
+    let selectedCount = 0;
+    const totalOptions = 3;
+    let celebrationActive = false;
 
-function selectOption(option) {
-  if (option.classList.contains("selected") || celebrationActive) return;
-  
-  option.classList.add("selected");
-  selectedCount++;
-  
-  updateProgress();
-  
-  const thumbnail = createThumbnail(option);
-  document.getElementById("selectedSection").appendChild(thumbnail);
-  document.getElementById("selectedSection").classList.add("show");
-  document.getElementById("divider").classList.add("show");
-  document.getElementById("progress").classList.add("show");
-  
-  if (selectedCount === 1) {
-    showMessage("❌ Not quite... try another!", "error");
-  }
-  else if (selectedCount === 2) {
-    showMessage("😅 One last chance!", "warning");
-  }
-  else if (selectedCount === 3) {
-    celebrate();
-  }
-}
+    function startQuiz() {
+      const startScreen = document.getElementById('startScreen');
+      const quizContent = document.getElementById('quizContent');
 
-function createThumbnail(option) {
-  const img = option.querySelector('img').cloneNode();
-  const thumbnail = document.createElement('div');
-  thumbnail.className = 'selected-thumbnail';
-  thumbnail.appendChild(img);
-  return thumbnail;
-}
+      // Fade out start screen
+      startScreen.style.opacity = '0';
 
-function updateProgress() {
-  const percentage = (selectedCount / totalOptions) * 100;
-  document.getElementById('progressText').textContent = `${selectedCount}/${totalOptions}`;
-  document.getElementById('progressFill').style.width = percentage + '%';
-}
+      // Show quiz content
+      quizContent.style.display = 'flex';
 
-function showMessage(text, type = '') {
-  const msg = document.getElementById("message");
-  msg.innerText = text;
-  msg.classList.add("show");
-  
-  msg.classList.remove('error', 'warning', 'success');
-  if (type) msg.classList.add(type);
-  
-  if (type !== 'success') {
-    setTimeout(() => {
-      if (!celebrationActive) msg.classList.remove("show");
-    }, 1500);
-  }
-}
-
-function celebrate() {
-  celebrationActive = true;
-  
-  const msg = document.getElementById("message");
-  msg.innerText = "🎉 YES EVERY PHOTO YOU CLICKED IS BEAUTIFUL! 🎉";
-  msg.classList.add("show", "success");
-  
-  document.body.classList.add("celebration");
-  
-  // Rich celebration with multiple effects
-  for (let i = 0; i < 60; i++) {
-    setTimeout(() => createConfetti(), i * 15);
-  }
-  for (let i = 0; i < 20; i++) {
-    setTimeout(() => createCracker(), i * 80);
-  }
-  for (let i = 0; i < 25; i++) {
-    setTimeout(() => createHeart(), i * 50);
-  }
-  for (let i = 0; i < 15; i++) {
-    setTimeout(() => createStarburst(), i * 120);
-  }
-  
-  // Bounce selected thumbnails
-  const thumbnails = document.querySelectorAll('.selected-thumbnail');
-  thumbnails.forEach((thumb, index) => {
-    setTimeout(() => {
-      thumb.style.animation = 'popIn 0.5s ease';
+      // Trigger animation after a tiny delay
       setTimeout(() => {
-        thumb.style.animation = '';
+        quizContent.classList.add('opacity-100', 'scale-100');
+        quizContent.classList.remove('opacity-0', 'scale-95');
+      }, 50);
+
+      // Remove start screen after animation
+      setTimeout(() => {
+        startScreen.style.display = 'none';
       }, 500);
-    }, index * 100);
-  });
-  
-  setTimeout(() => {
-    document.body.classList.remove("celebration");
-  }, 3500);
-}
+    }
 
-function createConfetti() {
-  const confetti = document.createElement("div");
-  confetti.className = "confetti";
-  const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#ffeaa7', '#dfe6e9', '#ffd93d', '#6c5ce7'];
-  confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
-  confetti.style.left = Math.random() * 100 + "%";
-  confetti.style.animationDuration = (Math.random() * 2 + 2) + "s";
-  confetti.style.width = (Math.random() * 10 + 4) + "px";
-  confetti.style.height = (Math.random() * 10 + 4) + "px";
-  document.body.appendChild(confetti);
-  setTimeout(() => confetti.remove(), 3000);
-}
+    function selectOption(option) {
+      if (option.classList.contains("selected") || celebrationActive) return;
 
-function createCracker() {
-  const cracker = document.createElement("div");
-  cracker.className = "cracker";
-  const emojis = ['🎉', '🎊', '✨', '🌟', '💥', '🎇', '🎆', '🧨'];
-  cracker.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
-  cracker.style.left = Math.random() * 100 + "%";
-  cracker.style.top = Math.random() * 100 + "%";
-  cracker.style.fontSize = (Math.random() * 20 + 20) + "px";
-  document.body.appendChild(cracker);
-  setTimeout(() => cracker.remove(), 1200);
-}
+      // Add selected class - this makes it disabled
+      option.classList.add("selected");
+      option.classList.add("selected-check");
 
-function createHeart() {
-  const heart = document.createElement("div");
-  heart.className = "heart";
-  const loveEmojis = ['❤️', '🧡', '💛', '💚', '💙', '💜', '🩷', '💖', '💗', '💓'];
-  heart.innerHTML = loveEmojis[Math.floor(Math.random() * loveEmojis.length)];
-  heart.style.left = Math.random() * 100 + "%";
-  heart.style.top = Math.random() * 80 + 20 + "%";
-  document.body.appendChild(heart);
-  setTimeout(() => heart.remove(), 2000);
-}
+      selectedCount++;
 
-function createStarburst() {
-  const star = document.createElement("div");
-  star.className = "starburst";
-  const stars = ['⭐', '🌟', '✨', '💫', '⚡'];
-  star.innerHTML = stars[Math.floor(Math.random() * stars.length)];
-  star.style.left = Math.random() * 100 + "%";
-  star.style.top = Math.random() * 100 + "%";
-  document.body.appendChild(star);
-  setTimeout(() => star.remove(), 1500);
-}
+      // Create and add thumbnail
+      const thumbnail = createThumbnail(option);
+      const selectedSection = document.getElementById("selectedSection");
 
-function resetGame() {
-  selectedCount = 0;
-  celebrationActive = false;
-  document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
-  document.getElementById('selectedSection').innerHTML = '';
-  document.getElementById('selectedSection').classList.remove('show');
-  document.getElementById('divider').classList.remove('show');
-  document.getElementById('progress').classList.remove('show');
-  document.getElementById('progressFill').style.width = '0%';
-  document.getElementById('progressText').textContent = '0/3';
-  const msg = document.getElementById('message');
-  msg.classList.remove('show', 'error', 'warning', 'success');
-  msg.innerText = '';
-}
+      // Clear placeholder if first selection
+      if (selectedCount === 1) {
+        selectedSection.innerHTML = '';
+      }
 
-document.addEventListener('dblclick', resetGame);
-</script>
+      selectedSection.appendChild(thumbnail);
+      selectedSection.classList.add("opacity-100", "translate-y-0");
+      selectedSection.classList.remove("opacity-0", "translate-y-2");
+
+      // Show divider
+      const divider = document.getElementById("divider");
+      divider.classList.add("scale-x-100");
+      divider.classList.remove("scale-x-0");
+
+      // Show messages
+      if (selectedCount === 1) {
+        showMessage("❌ Not quite... try another!", "error");
+
+        // Simple shake effect for remaining options
+        document.querySelectorAll('.option-item:not(.selected)').forEach(opt => {
+          opt.style.transform = 'translateX(5px)';
+          setTimeout(() => {
+            opt.style.transform = 'translateX(-5px)';
+          }, 100);
+          setTimeout(() => {
+            opt.style.transform = 'translateX(0)';
+          }, 200);
+        });
+      }
+      else if (selectedCount === 2) {
+        showMessage("😅 One last chance!", "warning");
+      }
+      else if (selectedCount === 3) {
+        celebrate();
+      }
+    }
+
+    function createThumbnail(option) {
+      const img = option.querySelector('img').cloneNode();
+      img.className = 'w-full h-full object-cover object-center';
+
+      const thumbnail = document.createElement('div');
+      thumbnail.className = 'thumbnail-slide rounded-xl overflow-hidden shadow-xl border-2 border-white aspect-square';
+      thumbnail.appendChild(img);
+
+      return thumbnail;
+    }
+
+    function showMessage(text, type = '') {
+      const msg = document.getElementById("message");
+
+      // Update message content
+      msg.innerHTML = text;
+
+      // Reset classes
+      msg.className = 'text-center text-base md:text-2xl p-4 md:p-5 px-6 md:px-10 rounded-2xl font-semibold shadow-2xl flex items-center justify-center min-h-[70px] md:min-h-[90px] h-auto max-w-2xl mx-auto border-2 border-white/30 message-stay';
+
+      // Add type-specific classes
+      if (type === 'success') {
+        msg.classList.add('bg-gradient-to-r', 'from-[#4CAF50]', 'to-[#45a049]', 'text-white');
+      } else if (type === 'error') {
+        msg.classList.add('bg-gradient-to-r', 'from-[#ff6b6b]', 'to-[#ff4757]', 'text-white');
+      } else if (type === 'warning') {
+        msg.classList.add('bg-gradient-to-r', 'from-[#ffd93d]', 'to-[#ffb347]', 'text-[#2d2d2d]');
+      } else {
+        msg.classList.add('bg-gradient-to-r', 'from-[#667eea]', 'to-[#764ba2]', 'text-white');
+      }
+
+      // Hide non-success messages after 2 seconds
+      if (type !== 'success') {
+        setTimeout(() => {
+          if (!celebrationActive) {
+            const currentMsg = document.getElementById("message");
+            currentMsg.innerHTML = '<span class="mr-2">✨</span>Click on any photo to begin your journey<span class="ml-2">✨</span>';
+            currentMsg.className = 'text-center text-base md:text-2xl p-4 md:p-5 px-6 md:px-10 rounded-2xl bg-gradient-to-r from-[#667eea] to-[#764ba2] text-white font-semibold shadow-2xl flex items-center justify-center min-h-[70px] md:min-h-[90px] h-auto max-w-2xl mx-auto border-2 border-white/30 message-stay';
+          }
+        }, 2000);
+      }
+    }
+
+    function celebrate() {
+      celebrationActive = true;
+
+      // Show success message - STAYS FOREVER
+      showMessage("🎉 YES! EVERY PHOTO YOU CLICKED IS BEAUTIFUL! 🎉", "success");
+
+      // Change background to celebration mode
+      document.body.className = 'bg-gradient-to-br from-[#ff6b6b] via-[#ffd93d] to-[#6c5ce7] font-sans min-h-screen flex items-center justify-center transition-all duration-700 overflow-hidden p-3 md:p-4';
+      document.body.style.backgroundSize = '300% 300%';
+      document.body.style.animation = 'gradient 5s ease infinite';
+
+      // Add gradient animation
+      const style = document.createElement('style');
+      style.innerHTML = `@keyframes gradient { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }`;
+      document.head.appendChild(style);
+
+      // Celebration effects
+      for (let i = 0; i < 50; i++) {
+        setTimeout(() => createConfetti(), i * 30);
+      }
+      for (let i = 0; i < 20; i++) {
+        setTimeout(() => createCracker(), i * 100);
+      }
+    }
+
+    function createConfetti() {
+      const confetti = document.createElement("div");
+      confetti.className = "confetti";
+      const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#ffeaa7', '#ffd93d', '#6c5ce7'];
+      confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+      confetti.style.left = Math.random() * 100 + "%";
+      confetti.style.animationDuration = (Math.random() * 2 + 2) + "s";
+      confetti.style.width = (Math.random() * 12 + 5) + "px";
+      confetti.style.height = (Math.random() * 12 + 5) + "px";
+      document.body.appendChild(confetti);
+      setTimeout(() => confetti.remove(), 3000);
+    }
+
+    function createCracker() {
+      const cracker = document.createElement("div");
+      cracker.className = "cracker";
+      const emojis = ['🎉', '🎊', '✨', '🌟', '💥', '🎇'];
+      cracker.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+      cracker.style.left = Math.random() * 100 + "%";
+      cracker.style.top = Math.random() * 100 + "%";
+      document.body.appendChild(cracker);
+      setTimeout(() => cracker.remove(), 1200);
+    }
+
+    function resetGame() {
+      if (celebrationActive) return; // Can't reset after celebration
+
+      selectedCount = 0;
+
+      // Reset options
+      document.querySelectorAll('.option-item').forEach(opt => {
+        opt.classList.remove('selected', 'selected-check');
+        opt.style.transform = '';
+        opt.style.borderColor = 'transparent';
+      });
+
+      // Reset selected section
+      const selectedSection = document.getElementById('selectedSection');
+      selectedSection.innerHTML = '<div class="text-gray-500 text-sm md:text-base italic flex items-center gap-2"><span class="text-2xl md:text-3xl">🖼️</span>Your selected photos will appear here<span class="text-2xl md:text-3xl">✨</span></div>';
+      selectedSection.classList.add("opacity-0", "translate-y-2");
+      selectedSection.classList.remove("opacity-100", "translate-y-0");
+
+      // Hide divider
+      const divider = document.getElementById("divider");
+      divider.classList.add("scale-x-0");
+      divider.classList.remove("scale-x-100");
+
+      // Reset message
+      const msg = document.getElementById('message');
+      msg.innerHTML = '<span class="mr-2">✨</span>Click on any photo to begin your journey<span class="ml-2">✨</span>';
+      msg.className = 'text-center text-base md:text-2xl p-4 md:p-5 px-6 md:px-10 rounded-2xl bg-gradient-to-r from-[#667eea] to-[#764ba2] text-white font-semibold shadow-2xl flex items-center justify-center min-h-[70px] md:min-h-[90px] h-auto max-w-2xl mx-auto border-2 border-white/30 message-stay';
+    }
+
+    // Double click to reset
+    document.addEventListener('dblclick', resetGame);
+  </script>
 
 </body>
+
 </html>
