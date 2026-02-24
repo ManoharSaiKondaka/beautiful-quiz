@@ -259,21 +259,21 @@
       <div
         class="option-item relative w-[70%] md:w-1/3 max-w-[300px] md:max-w-[400px] aspect-square rounded-2xl overflow-hidden bg-white shadow-2xl cursor-pointer transition-all duration-300 border-2 border-transparent"
         onclick="selectOption(this)" data-index="0">
-        <img src="ashu1.png" alt="Photo 1" class="w-full h-full object-cover object-top">
+        <img id="img1" class="w-full h-full object-cover scale-110 object-[50%_20%] transition-all duration-500">
       </div>
 
       <!-- Option 2 -->
       <div
         class="option-item relative w-[70%] md:w-1/3 max-w-[300px] md:max-w-[400px] aspect-square rounded-2xl overflow-hidden bg-white shadow-2xl cursor-pointer transition-all duration-300 border-2 border-transparent"
         onclick="selectOption(this)" data-index="1">
-        <img src="ashu2.png" alt="Photo 2" class="w-full h-full object-cover object-top">
+        <img id="img2" class="w-full h-full object-cover scale-110 object-[50%_20%] transition-all duration-500">
       </div>
 
       <!-- Option 3 -->
       <div
         class="option-item relative w-[70%] md:w-1/3 max-w-[300px] md:max-w-[400px] aspect-square rounded-2xl overflow-hidden bg-white shadow-2xl cursor-pointer transition-all duration-300 border-2 border-transparent"
         onclick="selectOption(this)" data-index="2">
-        <img src="ashu3.jpeg" alt="Photo 3" class="w-full h-full object-cover object-top">
+        <img id="img3" class="w-full h-full object-cover scale-110 object-[50%_20%] transition-all duration-500">
       </div>
     </div>
 
@@ -307,6 +307,22 @@
       </div>
     </div>
   </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const set = params.get("set") || "ashu"; // default is ashu
+
+    const imageSets = {
+      ashu: ["ashu1.png", "ashu2.png", "ashu3.jpeg"],
+      kiran: ["kiran1.jpeg", "kiran2.jpeg", "kiran3.jpeg"]
+    };
+
+    const selectedSet = imageSets[set] || imageSets["ashu"];
+
+    document.getElementById("img1").src = selectedSet[0];
+    document.getElementById("img2").src = selectedSet[1];
+    document.getElementById("img3").src = selectedSet[2];
+  </script>
 
   <script>
     let selectedCount = 0;
